@@ -1,1 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐉Dragon Demonic - Меню</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #08f7fe;
+            --neon-pink: #fe53bb;
+            --neon-green: #09fbd3;
+            --dark-bg: #0f0e17;
+            --section-bg: rgba(22, 33, 62, 0.7);
+        }
 
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            z-index: -3;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(15, 14, 23, 0.9), rgba(22, 33, 62, 0.9));
+            z-index: -2;
+        }
+
+        .particles-js-canvas-el {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .menu-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 2.5rem;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(8, 247, 254, 0.7);
+            animation: pulse 3s infinite;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            background: var(--section-bg);
+            color: var(--neon-green);
+            border-left: 4px solid var(--neon-green);
+            border-radius: 0 30px 30px 0;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 10px rgba(9, 251, 211, 0.1);
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .menu-item.in-view {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .menu-item:hover {
+            background: rgba(8, 247, 254, 0.2);
+            transform: translateX(20px) !important;
+            box-shadow: 0 0 20px rgba(9, 251, 211, 0.3);
+            border-left-color: var(--neon-pink);
+        }
+        
+        .menu-item:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--neon-pink);
+            animation: neonGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2),
+                        0 0 15px var(--neon-blue),
+                        0 0 25px var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px var(--neon-blue); }
+            50% { text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-green); }
+            100% { text-shadow: 0 0 10px var(--neon-blue); }
+        }
+        
+        @keyframes neonGlow {
+            from { box-shadow: 0 0 5px var(--neon-pink); }
+            to { box-shadow: 0 0 15px var(--neon-pink); }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-image"></div>
+    <div id="overlay"></div>
+    <div id="particles-js"></div>
+    
+    <div class="menu-container">
+        <h1>Меню</h1>
+        
+        <div class="menu-items">
+            <a href="index.html" class="menu-item" data-delay="0">Главная</a>
+            <a href="home.html" class="menu-item" data-delay="100">О проекте</a>
+            <a href="rules.html" class="menu-item" data-delay="200">Правила</a>
+            <a href="https://t.me/DragonDemonic_bot" target="_blank" class="menu-item" data-delay="300">Наш бот</a>
+            <a href="https://t.me/DragonDemonic_channel" target="_blank" class="menu-item" data-delay="400">Официальный канал</a>
+            <a href="https://t.me/DragonDemonic_chat" target="_blank" class="menu-item" data-delay="500">Чат сообщества</a>
+            <a href="team.html" class="menu-item" data-delay="600">Наша команда</a>
+            <a href="https://t.me/DragonDemonic_Managerbot" target="_blank" class="menu-item" data-delay="700">Менеджер проекта</a>
+        </div>
+
+        <a href="index.html" class="back-button">×</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parallax effect
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxBg = document.getElementById('background-image');
+                if (parallaxBg) {
+                    parallaxBg.style.transform = 'translate3d(0, ' + scrolled * 0.5 + 'px, 0)';
+                }
+            });
+
+            // Smoothly animated menu items
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                const delay = parseInt(item.dataset.delay, 10);
+                setTimeout(() => {
+                    item.classList.add('in-view');
+                }, delay);
+            });
+            
+            // Particles.js initialization
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#09fbd3" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1 } },
+                    "size": { "value": 3, "random": true, "anim": { "enable": true, "speed": 2 } },
+                    "line_linked": { "enable": true, "distance": 150, "color": "#08f7fe", "opacity": 0.2, "width": 1 },
+                    "move": { "enable": true, "speed": 1, "random": true, "out_mode": "out" }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                    "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>
