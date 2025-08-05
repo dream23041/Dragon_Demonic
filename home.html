@@ -1,1 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠Главная | 🐉Dragon Demonic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #08f7fe;
+            --neon-pink: #fe53bb;
+            --neon-green: #09fbd3;
+            --dark-bg: #0f0e17;
+            --section-bg: rgba(22, 33, 62, 0.7);
+        }
 
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            z-index: -3;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(15, 14, 23, 0.9), rgba(22, 33, 62, 0.9));
+            z-index: -2;
+        }
+
+        .particles-js-canvas-el {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 14, 23, 0.95);
+            padding: 15px 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin: 0 10px;
+            text-shadow: 0 0 5px rgba(9, 251, 211, 0.5);
+        }
+
+        .navbar a:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(254, 83, 187, 0.7);
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 0 40px;
+            opacity: 0;
+            animation: fadeInDown 1.5s ease-out forwards;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(8, 247, 254, 0.7);
+            animation: pulse 3s infinite alternate;
+        }
+
+        .subtitle {
+            color: var(--neon-green);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            animation-delay: 1s;
+        }
+
+        .content-section {
+            background: var(--section-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid var(--neon-pink);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .content-section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section p {
+            line-height: 1.7;
+            color: #d1d1d1;
+            font-size: 1.1rem;
+        }
+
+        .neon-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(9, 251, 211, 0.3);
+        }
+
+        .neon-btn:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px rgba(9, 251, 211, 0.6);
+            transform: translateY(-5px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(8, 247, 254, 0.7); }
+            100% { text-shadow: 0 0 20px rgba(8, 247, 254, 0.9), 0 0 30px rgba(8, 247, 254, 0.5); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-image"></div>
+    <div id="overlay"></div>
+    <div id="particles-js"></div>
+    
+    <div class="navbar">
+        <a href="index.html">Главная</a>
+        <a href="rules.html">Правила</a>
+        <a href="team.html">Команда</a>
+        <a href="https://t.me/DragonDemonic_bot" target="_blank">Бот</a>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 class="neon">Добро пожаловать в Dragon Demonic!</h1>
+            <div class="subtitle">Игровой Telegram-бот с уникальной атмосферой</div>
+        </header>
+
+        <div class="content-section">
+            <p>
+                Dragon Demonic — это захватывающий игровой бот про выживание и улучшение своей базы в Telegram, это захватывающая вселенная одного бота с своим лором и приключениями. Присоединяйтесь к нашему сообществу, участвуйте в ивентах, квестах, поддерживайте бота. Станьте одним из первых, кто напишет свою историю в этой вселенной.
+            </p>
+        </div>
+        
+        <div class="content-section">
+            <p>
+                Ознакомьтесь с правилами, чтобы сделать игру комфортной для всех участников. 
+                Следите за новостями в нашем канале и общайтесь в чате!
+            </p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="https://t.me/DragonDemonic_bot" target="_blank" class="neon-btn">Начать игру</a>
+            <a href="rules.html" class="neon-btn">Правила</a>
+        </div>
+
+        <footer>
+            <p>© 2025 DragonDemonic_project. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parallax effect
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxBg = document.getElementById('background-image');
+                if (parallaxBg) {
+                    parallaxBg.style.transform = 'translate3d(0, ' + scrolled * 0.5 + 'px, 0)';
+                }
+            });
+
+            // Intersection Observer for scroll animations
+            const sections = document.querySelectorAll('.content-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Particles.js initialization
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#09fbd3" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1 } },
+                    "size": { "value": 3, "random": true, "anim": { "enable": true, "speed": 2 } },
+                    "line_linked": { "enable": true, "distance": 150, "color": "#08f7fe", "opacity": 0.2, "width": 1 },
+                    "move": { "enable": true, "speed": 1, "random": true, "out_mode": "out" }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                    "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>
